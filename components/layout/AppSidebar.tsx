@@ -63,6 +63,11 @@ const navItems: NavItem[] = [
 
 const othersItems: NavItem[] = [
   {
+    icon: <PageIcon />,
+    name: "Documentation",
+    path: "/docs",
+  },
+  {
     icon: <TableIcon />,
     name: "Database Schema",
     path: "/database-schema",
