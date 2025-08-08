@@ -5,7 +5,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import Badge from "../ui/badge/Badge";
+import { Badge } from "../ui/badge";
 import Image from "next/image";
 
 // Define the TypeScript interface for the table rows

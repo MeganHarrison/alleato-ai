@@ -2,7 +2,7 @@
 import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import { MoreDotIcon } from "@/components/icons";
-import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 
@@ -123,18 +123,18 @@ export default function MonthlySalesChart() {
             onClose={closeDropdown}
             className="w-40 p-2"
           >
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
             >
               View More
-            </DropdownItem>
-            <DropdownItem
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex w-full font-normal text-left text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
             >
               Delete
-            </DropdownItem>
+            </DropdownMenuItem>
           </Dropdown>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Badge from "../ui/badge/Badge";
+import { Badge } from "../ui/badge";
 import { ArrowDownIcon, ArrowUpIcon, BoxIconLine, GroupIcon } from "@/components/icons";
 
 export const EcommerceMetrics = () => {

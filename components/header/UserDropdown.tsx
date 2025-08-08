@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
-import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { useUser } from "../context/UserContext";
 
 export default function UserDropdown() {
@@ -80,7 +80,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
 
         <ul className="flex flex-col gap-1 pt-4 pb-3 border-b border-gray-200 dark:border-gray-800">
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               tag="a"
               href="/profile"
@@ -102,10 +102,10 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
                 />
               </svg>
               Edit profile
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               tag="a"
               href="/profile"
@@ -127,10 +127,10 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
                 />
               </svg>
               Account settings
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               tag="a"
               href="/profile"
@@ -152,7 +152,7 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
                 />
               </svg>
               Support
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
         </ul>
         <Link

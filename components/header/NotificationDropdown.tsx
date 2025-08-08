@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
-import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
 
 export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +81,7 @@ export default function NotificationDropdown() {
         <ul className="flex flex-col h-auto overflow-y-auto custom-scrollbar">
           {/* Example notification items */}
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
             >
@@ -113,11 +113,11 @@ export default function NotificationDropdown() {
                   <span>5 min ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
             >
@@ -149,11 +149,11 @@ export default function NotificationDropdown() {
                   <span>8 min ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
               href="#"
@@ -186,11 +186,11 @@ export default function NotificationDropdown() {
                   <span>15 min ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
               href="#"
@@ -223,11 +223,11 @@ export default function NotificationDropdown() {
                   <span>1 hr ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
               onItemClick={closeDropdown}
             >
@@ -259,11 +259,11 @@ export default function NotificationDropdown() {
                   <span>5 min ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
             >
@@ -295,11 +295,11 @@ export default function NotificationDropdown() {
                   <span>8 min ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
             >
@@ -331,11 +331,11 @@ export default function NotificationDropdown() {
                   <span>15 min ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
 
           <li>
-            <DropdownItem
+            <DropdownMenuItem
               onItemClick={closeDropdown}
               className="flex gap-3 rounded-lg border-b border-gray-100 p-3 px-4.5 py-3 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-white/5"
               href="#"
@@ -368,7 +368,7 @@ export default function NotificationDropdown() {
                   <span>1 hr ago</span>
                 </span>
               </span>
-            </DropdownItem>
+            </DropdownMenuItem>
           </li>
           {/* Add more items as needed */}
         </ul>
