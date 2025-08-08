@@ -19,10 +19,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"],
+      "@/components/*": ["./components/*"],
+      "@/src/*": ["./src/*"],
+      "@/app/*": ["./src/app/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/hooks/*": ["./hooks/*"]
     },
     "types": ["./env.d.ts", "node"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "ai-agent-app", "free-nextjs-admin-dashboard"]
 }

@@ -1,63 +1,106 @@
-# Next.js Framework Starter
+# Alleato AI - Business Intelligence Platform
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/next-starter-template)
+A unified platform combining an AI-powered business assistant with an admin dashboard for comprehensive business management.
 
-<!-- dash-content-start -->
+## Features
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It's deployed on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+### AI Agent App
+- **AI Chat Assistant**: Chat interface for searching documents and meeting transcripts
+- **Cloudflare AutoRAG Integration**: Intelligent document search and retrieval
+- **Fireflies.ai Integration**: Automated meeting transcription sync
+- **Document Management**: Browse and manage your document library
 
-This template uses [OpenNext](https://opennext.js.org/) via the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare), which works by taking the Next.js build output and transforming it, so that it can run in Cloudflare Workers.
-
-<!-- dash-content-end -->
-
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
-
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/next-starter-template
-```
-
-A live public deployment of this template is available at [https://next-starter-template.templates.workers.dev](https://next-starter-template.templates.workers.dev)
+### Admin Dashboard
+- **Analytics Dashboard**: Real-time business metrics and charts
+- **UI Components**: Comprehensive set of UI elements and forms
+- **Tables & Data Management**: Advanced data tables for projects and documents
+- **Calendar**: Event management and scheduling
+- **User Management**: Profile and access control
 
 ## Getting Started
 
-First, run:
+### Prerequisites
+- Node.js 18.x or higher
+- npm or yarn
+- Cloudflare account (for Workers and R2)
+- Fireflies.ai API key (optional, for meeting sync)
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
+git clone https://github.com/your-repo/alleato-ai.git
+cd alleato-ai
 ```
 
-Then run the development server (using the package manager of your choice):
+2. Install dependencies:
+```bash
+npm install
+```
 
+3. Set up environment variables:
+Create a `.env.local` file with:
+```
+CLOUDFLARE_ACCOUNT_ID=your_account_id
+CLOUDFLARE_API_TOKEN=your_api_token
+FIREFLIES_API_KEY=your_fireflies_key
+R2_BUCKET_NAME=your_bucket_name
+```
+
+To get these values:
+- **CLOUDFLARE_ACCOUNT_ID**: Found in your Cloudflare dashboard URL
+- **CLOUDFLARE_API_TOKEN**: Create at Cloudflare Dashboard > My Profile > API Tokens
+  - Required permissions: Account:Cloudflare R2:Read
+- **R2_BUCKET_NAME**: The name of your R2 bucket containing documents
+- **FIREFLIES_API_KEY**: (Optional) From your Fireflies.ai account settings
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+alleato-ai/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   ├── admin/             # Admin dashboard pages
+│   ├── chat/              # AI chat interface
+│   └── tables/            # Data tables
+├── components/            # React components
+│   ├── ui/               # Reusable UI components
+│   ├── chat/             # Chat interface components
+│   └── dashboard/        # Dashboard components
+├── src/                   # Dashboard source files
+│   ├── components/       # Dashboard-specific components
+│   ├── context/          # React contexts
+│   └── layout/           # Layout components
+├── lib/                   # Utility functions
+├── workers/              # Cloudflare Workers
+├── scripts/              # Utility scripts
+└── public/               # Static assets
+```
 
-## Deploying To Production
+## Available Scripts
 
-| Command                           | Action                                       |
-| :-------------------------------- | :------------------------------------------- |
-| `npm run build`                   | Build your production site                   |
-| `npm run preview`                 | Preview your build locally, before deploying |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare    |
-| `npm wrangler tail`               | View real-time logs for all Workers          |
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run deploy` - Deploy to Cloudflare Workers
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS 4, Radix UI
+- **Backend**: Cloudflare Workers, R2 Storage
+- **AI**: Cloudflare AutoRAG
+- **Charts**: Recharts, ApexCharts
+- **Icons**: Lucide React, Tabler Icons
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This project combines two open-source projects. See LICENSE files for details.

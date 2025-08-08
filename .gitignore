@@ -41,3 +41,17 @@ next-env.d.ts
 # wrangler files
 .wrangler
 .dev.vars*
+
+# Environment variables
+.env.local
+
+# Node modules in subdirectories
+**/node_modules/
+
+# Log files
+*.log
+worker-logs*.txt
+
+# Deployment scripts (if sensitive)
+deploy-*.sh
+fix-and-deploy.sh

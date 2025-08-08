@@ -1,0 +1,42 @@
+{
+  "name": "fireflies-rag-worker",
+  "main": "src/index.js",
+  "compatibility_date": "2025-02-11",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "d1_databases": [
+    {
+      "binding": "ALLEATO_DB",
+      "database_name": "alleato",
+      "database_id": "fc7c9a6d-ca65-4768-b3f9-07ec5afb38c5"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEETING_TRANSCRIPTS",
+      "bucket_name": "alleato"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "0 * * * *",
+      "0 2 * * *"
+    ]
+  },
+  "env": {
+    "development": {
+      "vars": {
+        "ENVIRONMENT": "development"
+      }
+    },
+    "production": {
+      "vars": {
+        "ENVIRONMENT": "production"
+      }
+    }
+  }
+}
+EOF < /dev/null

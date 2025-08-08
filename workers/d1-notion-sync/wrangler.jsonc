@@ -1,0 +1,26 @@
+{
+  "name": "alleato-d1-notion-sync",
+  "main": "index.ts",
+  "build": {
+    "command": ""
+  },
+  "compatibility_date": "2025-03-07",
+  "compatibility_flags": ["nodejs_compat"],
+  
+  "vars": {
+    "NOTION_API_KEY": "YOUR_NOTION_API_KEY",
+    "NOTION_DATABASE_ID": "18fee3c6d9968192a666fe6b55e99f52"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "ALLEATO_DB",
+      "database_name": "alleato",
+      "database_id": "YOUR_DATABASE_ID"
+    }
+  ],
+
+  "triggers": {
+    "crons": ["0 */6 * * *"]
+  }
+}
