@@ -51,7 +51,51 @@ next-env.d.ts
 # Log files
 *.log
 worker-logs*.txt
+logs/
+wrangler-*.log
+dev.log
 
 # Deployment scripts (if sensitive)
 deploy-*.sh
 fix-and-deploy.sh
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+.dev.vars*
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.open-next/
+
+# Wrangler/Cloudflare
+.wrangler/
+.mf/
+
+# Meeting transcripts (sensitive data)
+**/transcripts/
+*.transcript.md

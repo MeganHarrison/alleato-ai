@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
-import { IconCloudUpload, IconLoader2 } from "@tabler/icons-react";
+import { CloudUpload, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -87,12 +87,12 @@ export function ProjectsTableWithSync({ data }: ProjectsTableWithSyncProps) {
             >
               {isSyncing ? (
                 <>
-                  <IconLoader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   Syncing...
                 </>
               ) : (
                 <>
-                  <IconCloudUpload className="h-4 w-4" />
+                  <CloudUpload className="h-4 w-4" />
                   Sync JSON to Notion
                 </>
               )}

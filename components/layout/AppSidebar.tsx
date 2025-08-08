@@ -308,14 +308,14 @@ const AppSidebar: React.FC = () => {
             <>
               <Image
                 className="dark:hidden"
-                src="/images/logo/Alleato_Logo_Light.png"
+                src="/images/logo/Alleato_Logo_Dark.png"
                 alt="Alleato Group Logo"
                 width={180}
                 height={40}
               />
               <Image
                 className="hidden dark:block"
-                src="/images/logo/Alleato-Group-Logo_Dark.png"
+                src="/images/logo/Alleato-Logo_Light.png"
                 alt="Alleato Group Logo"
                 width={180}
                 height={40}
@@ -323,7 +323,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <Image
-              src="/images/logo/Alleato_Icon_Light.png"
+              src="/images/logo/Alleato_Favicon.png"
               alt="Alleato Icon"
               width={40}
               height={40}

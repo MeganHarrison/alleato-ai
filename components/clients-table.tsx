@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { IconLoader2 } from "@tabler/icons-react";
+import { Loader2 } from "lucide-react";
 
 interface Client {
   id: number;
@@ -60,7 +60,7 @@ export function ClientsTable() {
     return (
       <div className="@container/main flex flex-1 flex-col pt-8 gap-4">
         <div className="flex items-center justify-center py-8">
-          <IconLoader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       </div>
     );

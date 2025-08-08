@@ -2,22 +2,20 @@
 
 import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconMessageCircle,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from "@tabler/icons-react"
+  Camera,
+  ChartBar,
+  LayoutDashboard,
+  Database,
+  FileCode,
+  FileText,
+  Folder,
+  HelpCircle,
+  MessageCircle,
+  FileChartLine,
+  Search,
+  Settings,
+  Users,
+} from "lucide-react"
 
 import { NavDocuments } from "@/components/nav-documents"
 import { NavMain } from "@/components/nav-main"
@@ -44,33 +42,33 @@ const data = {
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: IconDashboard,
+      icon: LayoutDashboard,
     },
     {
       title: "Chat",
       url: "/",
-      icon: IconMessageCircle,
+      icon: MessageCircle,
     },
     {
       title: "Meetings",
       url: "/meetings",
-      icon: IconUsers,
+      icon: Users,
     },
     {
       title: "Projects",
       url: "/tables/projects",
-      icon: IconFolder,
+      icon: Folder,
     },
     {
       title: "Documents",
       url: "/tables/documents",
-      icon: IconFileDescription,
+      icon: FileText,
     },
   ],
   navClouds: [
     {
       title: "Capture",
-      icon: IconCamera,
+      icon: Camera,
       isActive: true,
       url: "#",
       items: [
@@ -86,7 +84,7 @@ const data = {
     },
     {
       title: "Proposal",
-      icon: IconFileDescription,
+      icon: FileText,
       url: "#",
       items: [
         {
@@ -101,7 +99,7 @@ const data = {
     },
     {
       title: "Prompts",
-      icon: IconFileAi,
+      icon: FileCode,
       url: "#",
       items: [
         {
@@ -119,29 +117,29 @@ const data = {
     {
       title: "Settings",
       url: "#",
-      icon: IconSettings,
+      icon: Settings,
     },
     {
       title: "Search",
       url: "#",
-      icon: IconSearch,
+      icon: Search,
     },
   ],
   documents: [
     {
       name: "Data Library",
       url: "/tables/documents",
-      icon: IconDatabase,
+      icon: Database,
     },
     {
       name: "Reports",
       url: "#",
-      icon: IconReport,
+      icon: FileChartLine,
     },
     {
       name: "Word Assistant",
       url: "#",
-      icon: IconFileWord,
+      icon: FileText,
     },
   ],
 }
