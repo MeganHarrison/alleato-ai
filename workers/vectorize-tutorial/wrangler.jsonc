@@ -1,0 +1,15 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "vectorize-tutorial",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-08-07",
+	"observability": {
+		"enabled": true
+	},
+	"vectorize": [
+		{
+		  "binding": "VECTORIZE",
+		  "index_name": "tutorial-index"
+		}
+	  ]
+	}

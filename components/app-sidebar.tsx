@@ -51,7 +51,7 @@ const data = {
     },
     {
       title: "Meetings",
-      url: "/meetings",
+      url: "/tables/meetings",
       icon: Users,
     },
     {

@@ -1,0 +1,30 @@
+name = "alleato-vectorization"
+main = "workers/vectorization-worker.ts"
+compatibility_date = "2024-01-01"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[[d1_databases]]
+binding = "DB"
+database_name = "alleato"
+database_id = "fc7c9a6d-ca65-4768-b3f9-07ec5afb38c5"
+
+[[r2_buckets]]
+binding = "R2_STORAGE"
+bucket_name = "alleato-documents"
+
+[[queues.producers]]
+queue = "vectorization-queue"
+binding = "VECTOR_QUEUE"
+
+[[queues.consumers]]
+queue = "vectorization-queue"
+max_batch_size = 10
+max_batch_timeout = 30
+
+[triggers]
+crons = ["*/5 * * * *"]
+
+[observability]
+enabled = true

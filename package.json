@@ -11,7 +11,8 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
     "check": "npm run build && tsc",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview"
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "generate-types": "node scripts/generate-d1-types.js"
   },
   "dependencies": {
     "@cloudflare/mcp-server-cloudflare": "^0.2.0",
@@ -94,6 +95,7 @@
     "@types/react-transition-group": "^4.4.12",
     "eslint": "^8.57.0",
     "postcss": "^8",
+    "puppeteer": "^24.16.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",
     "typescript": "^5",

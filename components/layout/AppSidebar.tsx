@@ -19,6 +19,7 @@ import {
   ChatIcon,
   FileIcon,
 } from "../icons/index";
+import { Brain } from "lucide-react";
 import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
@@ -57,7 +58,10 @@ const navItems: NavItem[] = [
   {
     icon: <CalenderIcon />,
     name: "Meetings",
-    path: "/meetings",
+    subItems: [
+      { name: "Meeting Intelligence", path: "/meetings", new: true },
+      { name: "All Transcripts", path: "/meetings-list" },
+    ],
   },
 ];
 
@@ -71,6 +75,11 @@ const othersItems: NavItem[] = [
     icon: <TableIcon />,
     name: "Database Schema",
     path: "/database-schema",
+  },
+  {
+    icon: <Brain className="w-5 h-5" />,
+    name: "AI Vectorization",
+    path: "/test-vectorization",
   },
   {
     icon: <PlugInIcon />,

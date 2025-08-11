@@ -1,0 +1,33 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "rag-ai-tutorial",
+	"main": "src/index.js",
+	"compatibility_date": "2025-08-07",
+	"observability": {
+		"enabled": true
+	},
+	"ai": {
+		"binding": "AI"
+	},
+	"vectorize": [
+    {
+      "binding": "VECTOR_INDEX",
+      "index_name": "alleato-embeddings"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "alleato",
+      "database_id": "fc7c9a6d-ca65-4768-b3f9-07ec5afb38c5"
+    }
+  ],
+  "workflows": [
+    {
+      "name": "rag",
+      "binding": "RAG_WORKFLOW",
+      "class_name": "RAGWorkflow"
+    }
+  ]
+}
+	

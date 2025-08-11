@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
           }
         `,
         variables: {
-          limit: 10 // Limit to last 10 meetings for initial sync
+          limit: 50 // Increased limit to catch more meetings
         }
       })
     });
@@ -50,13 +50,57 @@ export async function POST(request: NextRequest) {
       throw new Error('No transcripts found in Fireflies response');
     }
     
-    // 2. Convert to markdown and upload to R2 bucket connected to AutoRAG
+    // First, get existing files to avoid duplicates
+    const existingFiles = new Set<string>();
+    try {
+      const listResponse = await fetch(
+        `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/r2/buckets/${env.R2_BUCKET_NAME}/objects?per_page=1000`,
+        {
+          headers: {
+            'Authorization': `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
+          },
+        }
+      );
+      
+      if (listResponse.ok) {
+        const listData = await listResponse.json();
+        if (Array.isArray(listData.result)) {
+          listData.result.forEach((obj: any) => {
+            existingFiles.add(obj.key);
+          });
+        }
+      }
+    } catch (error) {
+      console.warn('Could not fetch existing files:', error);
+    }
+
+    // 2. Convert to markdown and upload to R2 bucket
     const syncResults = await Promise.allSettled(
       firefliesData.data.transcripts.map(async (transcript: any) => {
         const markdownContent = convertToMarkdown(transcript);
         
-        // Upload to R2 bucket that's connected to your AutoRAG
-        const uploadResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/r2/buckets/${env.R2_BUCKET_NAME}/objects/meetings/meeting-${transcript.id}.md`, {
+        // Format date as YYYY-MM-DD
+        const date = new Date(transcript.date);
+        const dateStr = date.toISOString().split('T')[0];
+        
+        // Clean title for filename (remove special characters)
+        const cleanTitle = transcript.title
+          .replace(/[^a-zA-Z0-9\s-]/g, '')
+          .trim();
+        
+        // Create filename with format: YYYY-MM-DD - Title.md
+        const filename = `${dateStr} - ${cleanTitle}.md`;
+        
+        // Skip if file already exists
+        if (existingFiles.has(filename)) {
+          console.log(`Skipping existing file: ${filename}`);
+          return { id: transcript.id, filename, skipped: true };
+        }
+        
+        console.log(`Uploading meeting: ${filename}`);
+        
+        // Upload to R2 bucket (no meetings folder)
+        const uploadResponse = await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/r2/buckets/${env.R2_BUCKET_NAME}/objects/${filename}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
@@ -66,16 +110,26 @@ export async function POST(request: NextRequest) {
         });
 
         if (!uploadResponse.ok) {
-          throw new Error(`Failed to upload meeting ${transcript.id}: ${uploadResponse.status}`);
+          const errorText = await uploadResponse.text();
+          throw new Error(`Failed to upload meeting ${filename}: ${uploadResponse.status} - ${errorText}`);
         }
 
-        return transcript.id;
+        return { id: transcript.id, filename, title: transcript.title };
       })
     );
 
-    // Count successful uploads
-    const successfulUploads = syncResults.filter(result => result.status === 'fulfilled').length;
-    const failedUploads = syncResults.filter(result => result.status === 'rejected').length;
+    // Count successful uploads and gather details
+    const successfulUploads = syncResults.filter(result => result.status === 'fulfilled');
+    const failedUploads = syncResults.filter(result => result.status === 'rejected');
+    
+    // Get successful filenames for logging
+    const uploadedFiles = successfulUploads
+      .map(result => (result as PromiseFulfilledResult<any>).value)
+      .filter(file => !file.skipped);
+    
+    const skippedFiles = successfulUploads
+      .map(result => (result as PromiseFulfilledResult<any>).value)
+      .filter(file => file.skipped).length;
 
     // 3. Trigger AutoRAG sync to reindex new content
     try {
@@ -92,9 +146,12 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ 
-      count: successfulUploads,
-      failed: failedUploads,
-      message: `Successfully synced ${successfulUploads} meetings${failedUploads > 0 ? ` (${failedUploads} failed)` : ''}`
+      count: uploadedFiles.length,
+      failed: failedUploads.length,
+      skipped: skippedFiles,
+      uploadedFiles: uploadedFiles,
+      message: `Successfully synced ${uploadedFiles.length} new meetings${skippedFiles > 0 ? ` (${skippedFiles} already existed)` : ''}${failedUploads.length > 0 ? ` (${failedUploads.length} failed)` : ''}`,
+      errors: failedUploads.map(f => (f as PromiseRejectedResult).reason?.message || 'Unknown error')
     });
 
   } catch (error) {
