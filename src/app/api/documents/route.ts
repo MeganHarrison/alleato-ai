@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment
+
 interface DocumentMetadata {
   id: string;
   title: string;
@@ -24,7 +26,7 @@ interface DocumentMetadata {
 export async function GET(request: NextRequest) {
   try {
     // Get Cloudflare context
-    const { env } = await getCloudflareContext({ async: true });
+    const { env } = await getCloudflareContext();
     
     // Check if this is a test request
     const { searchParams } = new URL(request.url);
@@ -707,4 +709,3 @@ function formatFileSize(bytes: number): string {
   
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
-export const runtime = 'edge';

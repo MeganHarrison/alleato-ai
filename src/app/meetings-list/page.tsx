@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { RefreshCw, Search, Calendar, FileText, Download, Clock, Upload } from 'lucide-react';
 import AppLayout from '@/components/layout/AppLayout';
+import API_ENDPOINTS from '@/lib/config/api';
 
 interface MeetingFile {
   filename: string;
@@ -29,7 +30,7 @@ export default function MeetingsListPage() {
     console.log('fetchMeetings called');
     setLoading(true);
     try {
-      const response = await fetch('/api/meetings');
+      const response = await fetch(API_ENDPOINTS.meetings);
       console.log('API response status:', response.status);
       const data = await response.json();
       console.log('API response data:', data);
@@ -52,7 +53,7 @@ export default function MeetingsListPage() {
     setSyncing(true);
     setSyncResult(null);
     try {
-      const response = await fetch('/api/sync-meetings', { method: 'POST' });
+      const response = await fetch(API_ENDPOINTS.syncMeetings, { method: 'POST' });
       const data = await response.json();
       setSyncResult(data);
       
@@ -208,7 +209,7 @@ export default function MeetingsListPage() {
                         <Button
                           size="sm"
                           variant="ghost"
-                          onClick={() => window.open(`/api/meetings/download?file=${encodeURIComponent(meeting.path)}`, '_blank')}
+                          onClick={() => window.open(`${API_ENDPOINTS.meetingsDownload}?file=${encodeURIComponent(meeting.path)}`, '_blank')}
                           className="opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <Download className="h-3 w-3" />

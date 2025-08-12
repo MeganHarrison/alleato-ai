@@ -18,6 +18,7 @@ import {
   Upload
 } from 'lucide-react';
 import AppLayout from '@/components/layout/AppLayout';
+import API_ENDPOINTS from '@/lib/config/api';
 
 interface SyncStatus {
   service: string;
@@ -39,7 +40,7 @@ export default function SyncStatusPage() {
 
     // Check R2 Storage
     try {
-      const r2Response = await fetch('/api/test-r2');
+      const r2Response = await fetch(API_ENDPOINTS.testR2);
       const r2Data = await r2Response.json();
       newStatuses.push({
         service: 'R2 Storage',
@@ -59,7 +60,7 @@ export default function SyncStatusPage() {
 
     // Check Meetings in R2
     try {
-      const meetingsResponse = await fetch('/api/meetings');
+      const meetingsResponse = await fetch(API_ENDPOINTS.meetings);
       const meetingsData = await meetingsResponse.json();
       newStatuses.push({
         service: 'Meeting Files',
@@ -82,7 +83,7 @@ export default function SyncStatusPage() {
 
     // Check D1 Database - Meetings
     try {
-      const d1Response = await fetch('/api/check-d1-projects');
+      const d1Response = await fetch(API_ENDPOINTS.checkD1Projects);
       const d1Data = await d1Response.json();
       
       if (d1Data.success) {
@@ -114,7 +115,7 @@ export default function SyncStatusPage() {
 
     // Check D1 Database - Projects
     try {
-      const projectsResponse = await fetch('/api/list-d1-projects');
+      const projectsResponse = await fetch(API_ENDPOINTS.listD1Projects);
       const projectsData = await projectsResponse.json();
       newStatuses.push({
         service: 'D1 Database - Projects',
@@ -134,7 +135,7 @@ export default function SyncStatusPage() {
 
     // Check Notion Connection
     try {
-      const notionResponse = await fetch('/api/notion-schema');
+      const notionResponse = await fetch(API_ENDPOINTS.notionSchema);
       const notionData = await notionResponse.json();
       newStatuses.push({
         service: 'Notion API',
@@ -153,7 +154,7 @@ export default function SyncStatusPage() {
 
     // Check Clients Table
     try {
-      const clientsResponse = await fetch('/api/clients');
+      const clientsResponse = await fetch(API_ENDPOINTS.clients);
       const clientsData = await clientsResponse.json();
       newStatuses.push({
         service: 'D1 Database - Clients',
@@ -173,7 +174,7 @@ export default function SyncStatusPage() {
 
     // Check Vectorization Status
     try {
-      const vectorResponse = await fetch('/api/vectorization/status');
+      const vectorResponse = await fetch(API_ENDPOINTS.vectorizationStatus);
       const vectorData = await vectorResponse.json();
       newStatuses.push({
         service: 'Vectorization',
@@ -202,19 +203,19 @@ export default function SyncStatusPage() {
       let response;
       switch(service) {
         case 'Meeting Files':
-          response = await fetch('/api/sync-meetings', { method: 'POST' });
+          response = await fetch(API_ENDPOINTS.syncMeetings, { method: 'POST' });
           break;
         case 'D1 Database - Meetings':
-          response = await fetch('/api/sync-meetings-to-d1', { method: 'POST' });
+          response = await fetch(API_ENDPOINTS.syncMeetingsToD1, { method: 'POST' });
           break;
         case 'D1 Database - Projects':
-          response = await fetch('/api/sync-notion-to-d1', { method: 'POST' });
+          response = await fetch(API_ENDPOINTS.syncNotionToD1, { method: 'POST' });
           break;
         case 'D1 Database - Clients':
-          response = await fetch('/api/sync-notion-clients-to-d1', { method: 'POST' });
+          response = await fetch(API_ENDPOINTS.syncNotionClientsToD1, { method: 'POST' });
           break;
         case 'Vectorization':
-          response = await fetch('/api/vectorization/process', { method: 'POST' });
+          response = await fetch(API_ENDPOINTS.vectorizationProcess, { method: 'POST' });
           break;
         default:
           throw new Error('Unknown service');

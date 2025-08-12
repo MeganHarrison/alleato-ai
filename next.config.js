@@ -1,13 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    // Skip type checking during build for deployment
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    // Skip ESLint during build for deployment
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -27,17 +19,23 @@ const nextConfig = {
       },
     ],
   },
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ["@svgr/webpack"],
-    });
-    return config;
+  
+  env: {
+    NEXT_PUBLIC_RAG_WORKER_URL: process.env.NEXT_PUBLIC_RAG_WORKER_URL,
+    NEXT_PUBLIC_PROJECTS_WORKER_URL: process.env.NEXT_PUBLIC_PROJECTS_WORKER_URL,
+    NEXT_PUBLIC_NOTION_WORKER_URL: process.env.NEXT_PUBLIC_NOTION_WORKER_URL,
+    NEXT_PUBLIC_API_WORKER_URL: process.env.NEXT_PUBLIC_API_WORKER_URL,
+  },
+  
+  reactStrictMode: true,
+  
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  
+  eslint: {
+    ignoreDuringBuilds: false,
   },
 };
 
 module.exports = nextConfig;
-
-// added by create cloudflare to enable calling `getCloudflareContext()` in `next dev`
-const { initOpenNextCloudflareForDev } = require("@opennextjs/cloudflare");
-initOpenNextCloudflareForDev();

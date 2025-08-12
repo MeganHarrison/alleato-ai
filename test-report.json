@@ -1,0 +1,230 @@
+{
+  "timestamp": "2025-08-12T03:35:39.170Z",
+  "testResults": {
+    "mainPageLoaded": true,
+    "meetingsPageFound": true,
+    "finalUrl": "https://asrsfireprotection.com/meetings",
+    "pageTitle": "Alleato AI - Business Intelligence Platform",
+    "currentUrl": "https://asrsfireprotection.com/meetings"
+  },
+  "pageAnalysis": {
+    "hasTable": false,
+    "hasList": true,
+    "hasCards": true,
+    "meetingElements": 0,
+    "loadingElements": 0,
+    "errorElements": 0,
+    "bodyText": "CORE FEATURES\nDashboard\nAI Assistant\nSearch & RAG\nDATA TABLES\nProjects\nMeetings\nMeeting Intelligence\nNEW\nAll Transcripts\nDocuments\nClients\nReports\nProject Reports\nPRO\nClient Analytics\nPRO\nDEVELOPER DOCS\nDatabase Schema\nAPI Documentation\nWorkers\nSite Map\nACCOUNT\nProfile\nSettings\nBilling\nNotifications\nSign Out\n⌘\nK\nJ\nJohn\nMeeting Intelligence\n\nSearch meeting transcripts, track decisions, and analyze meeting patterns\n\nSync Meetings\nSearch Meetings\nRecent Meetings\nInsights"
+  },
+  "networkActivity": {
+    "totalRequests": 130,
+    "apiCalls": 4,
+    "apiCallDetails": [
+      {
+        "url": "https://alleato-api.megan-d14.workers.dev/api/user",
+        "method": "GET",
+        "timestamp": "2025-08-12T03:35:30.217Z"
+      },
+      {
+        "url": "https://alleato-api.megan-d14.workers.dev/api/user",
+        "method": "GET",
+        "timestamp": "2025-08-12T03:35:34.671Z"
+      },
+      {
+        "url": "https://asrsfireprotection.com/api/documents?limit=10&type=meeting",
+        "method": "GET",
+        "timestamp": "2025-08-12T03:35:34.671Z"
+      },
+      {
+        "url": "https://asrsfireprotection.com/api/documents/analytics",
+        "method": "GET",
+        "timestamp": "2025-08-12T03:35:34.673Z"
+      }
+    ]
+  },
+  "consoleMessages": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 ()",
+      "location": {
+        "url": "https://asrsfireprotection.com/admin/billing?_rsc=1wtp7"
+      }
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 ()",
+      "location": {
+        "url": "https://asrsfireprotection.com/admin/billing?_rsc=ipyxd"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "storageData": {
+    "localStorage": {
+      "theme": "light"
+    },
+    "sessionStorage": "empty"
+  },
+  "allNetworkCalls": [
+    {
+      "url": "https://alleato-api.megan-d14.workers.dev/api/user",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/dashboard?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/chat?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/test-vectorization?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/tables/projects?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/tables/documents?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/tables/clients?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/database-schema?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/docs?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/docs/workers?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/docs/site-map?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/admin/profile?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/admin?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/admin/billing?_rsc=1wtp7",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://alleato-api.megan-d14.workers.dev/api/user",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/api/documents?limit=10&type=meeting",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/api/documents/analytics",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/dashboard?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/chat?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/test-vectorization?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/tables/projects?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/tables/documents?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/tables/clients?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/database-schema?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/docs?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/docs/workers?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/docs/site-map?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/admin/profile?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/admin?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/admin/billing?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    },
+    {
+      "url": "https://asrsfireprotection.com/meetings-list?_rsc=ipyxd",
+      "method": "GET",
+      "resourceType": "fetch"
+    }
+  ]
+}

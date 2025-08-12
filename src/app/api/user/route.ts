@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment
+
 // GET /api/user - Get current user information
 export async function GET(request: NextRequest) {
   try {
@@ -29,7 +31,7 @@ export async function GET(request: NextRequest) {
 // PUT /api/user - Update current user information
 export async function PUT(request: NextRequest) {
   try {
-    const { env } = await getCloudflareContext({ async: true });
+    const { env } = await getCloudflareContext();
     const body = await request.json();
     const { name, email, avatarUrl } = body;
     
@@ -56,4 +58,3 @@ export async function PUT(request: NextRequest) {
     );
   }
 }
-export const runtime = 'edge';

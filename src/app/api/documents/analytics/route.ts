@@ -171,4 +171,4 @@ function processParticipantData(participantRecords: any[]) {
     meetingsByParticipant: participantCounts,
   };
 }
-export const runtime = 'edge';
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment

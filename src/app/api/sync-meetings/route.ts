@@ -246,4 +246,4 @@ function extractProjectFromTitle(title: string): string {
   
   return 'general';
 }
-export const runtime = 'edge';
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment

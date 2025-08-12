@@ -1,114 +1,87 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCloudflareContext } from '@opennextjs/cloudflare';
+
+const RAG_WORKER_URL = process.env.NEXT_PUBLIC_RAG_WORKER_URL || 'https://fireflies-rag-worker.megan-d14.workers.dev';
 
 export async function POST(request: NextRequest) {
   try {
-    // Get Cloudflare context
-    const { env } = await getCloudflareContext({ async: true });
+    const body = await request.json() as { message: string; projectId?: number };
+    const { message, projectId } = body;
     
-    // Validate environment variables first
-    if (!env.CLOUDFLARE_ACCOUNT_ID || env.CLOUDFLARE_ACCOUNT_ID === 'your-account-id-here' ||
-        !env.CLOUDFLARE_API_TOKEN || env.CLOUDFLARE_API_TOKEN === 'your-api-token-here') {
-      console.error('Missing or invalid Cloudflare credentials');
-      return NextResponse.json({ 
-        response: 'Configuration error: Please set your CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in the .env.local file.' 
-      }, { status: 200 });
-    }
-    
-    const body = await request.json() as { message: string };
-    const { message } = body;
-    
-    // Call Cloudflare AutoRAG API
-    const autoragUrl = `https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/autorag/rags/alleato-docs/ai-search`;
-    
-    console.log('Calling AutoRAG API:', autoragUrl);
-    
-    const response = await fetch(autoragUrl, {
+    // Use vector search for AI-powered responses
+    const searchResponse = await fetch(`${RAG_WORKER_URL}/vector-search`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${env.CLOUDFLARE_API_TOKEN}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        query: message,
-        query_rewrite: true,
-        topic_modeling: true,
-        limit: 5,
-        chat_history: []
+      body: JSON.stringify({ 
+        query: message, 
+        limit: 5 
       }),
     });
 
-    console.log('AutoRAG response status:', response.status);
-    console.log('AutoRAG response headers:', response.headers);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('AutoRAG API error:', errorText);
+    if (!searchResponse.ok) {
+      const errorData = await searchResponse.json().catch(() => ({ error: searchResponse.statusText }));
+      console.error('RAG worker error:', errorData);
       
-      // Check for specific error messages
-      if (response.status === 404) {
-        return NextResponse.json({ 
-          response: 'The AutoRAG knowledge base "alleato-docs" was not found. Please ensure it has been created in your Cloudflare account.' 
+      // Fallback to regular search if vector search fails
+      const fallbackResponse = await fetch(`${RAG_WORKER_URL}/search`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          query: message, 
+          limit: 5 
+        }),
+      });
+      
+      if (!fallbackResponse.ok) {
+        return NextResponse.json(
+          { response: 'Sorry, I encountered an error searching the meeting database.' },
+          { status: 500 }
+        );
+      }
+      
+      const fallbackData = await fallbackResponse.json();
+      const fallbackResults = fallbackData.results || [];
+      
+      if (fallbackResults.length === 0) {
+        return NextResponse.json({
+          response: `I couldn't find any relevant information about "${message}" in the meeting transcripts.`
         });
       }
       
-      throw new Error(`AutoRAG API error: ${response.status} - ${errorText}`);
+      const response = `Based on the meeting transcripts, here's what I found about "${message}":\n\n` +
+        fallbackResults.slice(0, 3).map((r: any) => 
+          `• From "${r.meeting?.title || 'Unknown Meeting'}" (${new Date(r.meeting?.date).toLocaleDateString()}): ${r.chunk?.content?.substring(0, 200)}...`
+        ).join('\n\n');
+      
+      return NextResponse.json({ response });
     }
 
-    const data = await response.json() as any;
-    console.log('AutoRAG response:', JSON.stringify(data, null, 2));
+    const data = await searchResponse.json();
+    const results = data.results || [];
     
-    // Extract the AI response from AutoRAG
-    let aiResponse = data.result?.response || data.response || 'I apologize, but I could not generate a response at this time.';
-    
-    // If AutoRAG returns no matches, provide a helpful message
-    if (data.result?.matches && data.result.matches.length === 0) {
-      aiResponse = "I couldn't find any relevant documents for your query. This might be because:\n\n1. The knowledge base is empty - try syncing some meetings first\n2. Your query doesn't match any indexed content\n3. Try rephrasing your question or being more specific";
+    if (results.length === 0) {
+      return NextResponse.json({
+        response: `I couldn't find any relevant information about "${message}" in the meeting transcripts. The system has access to 827 meetings - try asking about specific projects, clients, or topics discussed in meetings.`
+      });
     }
     
-    return NextResponse.json({ response: aiResponse });
+    // Format the response from search results
+    const response = `Based on AI analysis of the meeting transcripts, here's what I found:\n\n` +
+      results.slice(0, 3).map((r: any, i: number) => 
+        `${i + 1}. From "${r.meeting?.title || 'Unknown Meeting'}" (${r.meeting?.date ? new Date(r.meeting.date).toLocaleDateString() : 'Date unknown'}):\n   ${r.chunk?.content?.substring(0, 250) || 'No content available'}...`
+      ).join('\n\n') +
+      `\n\nFound ${results.length} relevant sections across the meeting database.`;
+    
+    return NextResponse.json({ response });
+    
   } catch (error) {
     console.error('Chat API error:', error);
-    
-    // Check for common configuration issues
-    if (error instanceof Error) {
-      if (error.message.includes('CLOUDFLARE_ACCOUNT_ID')) {
-        return NextResponse.json({ 
-          response: 'Configuration error: CLOUDFLARE_ACCOUNT_ID is not set. Please check your environment variables.' 
-        });
-      }
-      if (error.message.includes('CLOUDFLARE_API_TOKEN')) {
-        return NextResponse.json({ 
-          response: 'Configuration error: CLOUDFLARE_API_TOKEN is not set. Please check your environment variables.' 
-        });
-      }
-      if (error.message.includes('404')) {
-        return NextResponse.json({ 
-          response: 'The AutoRAG knowledge base was not found. Please ensure "alleato-docs" has been created in your Cloudflare account.' 
-        });
-      }
-    }
-    
-    return NextResponse.json({ 
-      response: 'I apologize, but I encountered an error while processing your request. Please try again later.' 
-    }, { status: 200 }); // Return 200 to display error message in chat
+    return NextResponse.json(
+      { response: 'Sorry, I encountered an error processing your request. Please try again.' },
+      { status: 500 }
+    );
   }
 }
-
-// Helper function to format search results
-function formatSearchResults(results: any[]): string {
-  if (!results || results.length === 0) {
-    return '';
-  }
-  
-  const formatted = results.map((result, index) => {
-    const title = result.metadata?.title || `Document ${index + 1}`;
-    const summary = result.content?.substring(0, 200) + '...' || 'No content available';
-    const score = result.score?.toFixed(2) || 'N/A';
-    
-    return `**${title}** (Relevance: ${score})\n${summary}`;
-  }).join('\n\n');
-  
-  return `\n\n**Related Documents:**\n${formatted}`;
-}
-export const runtime = 'edge';

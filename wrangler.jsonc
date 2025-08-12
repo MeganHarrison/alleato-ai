@@ -4,27 +4,20 @@
  */ {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "alleato-ai",
-  "main": ".vercel/output/static/_worker.js/index.js",
+  "main": ".open-next/worker.js",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "assets": {
     "binding": "ASSETS",
-    "directory": ".vercel/output/static"
+    "directory": ".open-next/assets"
   },
   "observability": {
     "enabled": true
   },
   "upload_source_maps": true,
   "vars": {
-    "CLOUDFLARE_ACCOUNT_ID": "YOUR_CLOUDFLARE_ACCOUNT_ID",
-    "CLOUDFLARE_API_KEY": "YOUR_CLOUDFLARE_API_KEY",
-    "CLOUDFLARE_API_TOKEN": "YOUR_CLOUDFLARE_API_TOKEN",
-    "ALLEATO_DATABASE_ID": "YOUR_DATABASE_ID",
-    "R2_BUCKET_NAME": "YOUR_R2_BUCKET_NAME",
-    "FIREFLIES_API_KEY": "YOUR_FIREFLIES_API_KEY",
-    "NOTION_API_KEY": "YOUR_NOTION_API_KEY",
-    "NOTION_DATABASE_ID": "18fee3c6d9968192a666fe6b55e99f52",
-    "NOTION_CLIENTS_DATABASE_ID": "248ee3c6-d996-807a-bd99-d2b2202b7ba2"
+    "ALLEATO_DATABASE_ID": "fc7c9a6d-ca65-4768-b3f9-07ec5afb38c5",
+    "R2_BUCKET_NAME": "alleato"
   },
   "d1_databases": [
     {
@@ -33,6 +26,15 @@
       "database_id": "fc7c9a6d-ca65-4768-b3f9-07ec5afb38c5"
     }
   ],
+  "r2_buckets": [
+    {
+      "binding": "R2_BUCKET",
+      "bucket_name": "alleato"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
   "routes": [
     {
       "pattern": "asrsfireprotection.com",

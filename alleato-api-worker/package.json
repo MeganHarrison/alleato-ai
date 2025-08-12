@@ -1,0 +1,17 @@
+{
+  "name": "alleato-api-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker API for Alleato with D1 database access",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250805.0",
+    "typescript": "^5.5.4",
+    "wrangler": "^3.72.0"
+  },
+  "dependencies": {}
+}

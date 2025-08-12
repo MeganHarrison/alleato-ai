@@ -1,24 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
-export const runtime = 'edge';
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment
 
 export async function GET(request: NextRequest) {
   try {
-    // In development, always use mock data since Cloudflare context might not be available
-    const isDevelopment = process.env.NODE_ENV === 'development';
-    
+    // Try to get Cloudflare context
     let env = null;
+    let db = null;
+    
     try {
-      if (!isDevelopment) {
-        const context = await getCloudflareContext({ async: true });
-        env = context.env;
-      }
+      const context = await getCloudflareContext();
+      env = context?.env;
+      db = env?.DB;
     } catch (error) {
-      console.log('Cloudflare context not available, using mock data');
+      console.log('Cloudflare context error:', error);
     }
     
-    if (!env || !env.DB) {
+    // Always fall back to mock data if DB is not available
+    if (!db) {
       // Return mock data for development when D1 is not configured
       const mockProjects = [
         {
@@ -80,22 +80,50 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Get all projects from D1 database
-    const { results: projects } = await env.DB.prepare(`
-      SELECT 
-        id,
-        title as header,
-        notion_id,
-        status,
-        priority,
-        project_address,
-        estimated_value,
-        profit_margin,
-        created_at,
-        updated_at
-      FROM projects
-      ORDER BY id
-    `).all();
+    // Try to get projects from D1 database
+    let projects = [];
+    try {
+      const result = await db.prepare(`
+        SELECT 
+          id,
+          name as header,
+          status,
+          description,
+          client_id,
+          start_date,
+          end_date,
+          budget as estimated_value,
+          notion_id,
+          created_at,
+          updated_at
+        FROM projects
+        ORDER BY id
+      `).all();
+      
+      projects = result.results || [];
+    } catch (dbError) {
+      console.error('Database query error:', dbError);
+      // Return mock data on database error
+      const mockProjects = [
+        {
+          id: 1,
+          header: "Fire Protection System Design",
+          type: "Project",
+          status: "In Progress",
+          target: "150000",
+          limit: "15.0%",
+          reviewer: "Eddie Lake"
+        }
+      ];
+      
+      return NextResponse.json({
+        success: true,
+        projects: mockProjects,
+        total: mockProjects.length,
+        usingMockData: true,
+        message: "Database error - returning mock data"
+      });
+    }
 
     // Transform D1 data to match the expected table format
     const transformedProjects = projects?.map((project: any) => ({

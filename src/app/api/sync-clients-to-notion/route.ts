@@ -150,4 +150,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-export const runtime = 'edge';
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment

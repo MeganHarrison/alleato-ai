@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 
+// export const runtime = 'edge'; // Handled by Cloudflare Workers deployment
+
 export async function GET(request: NextRequest) {
   try {
-    const { env } = await getCloudflareContext({ async: true });
+    const { env } = await getCloudflareContext();
     
     if (!env.DB) {
       return NextResponse.json(
@@ -42,4 +44,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-export const runtime = 'edge';

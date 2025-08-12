@@ -4,23 +4,23 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
-import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-  ChatIcon,
-  FileIcon,
-} from "../icons/index";
-import { Brain } from "lucide-react";
-import SidebarWidget from "./SidebarWidget";
+import { 
+  Brain, 
+  Grid3X3, 
+  MessageCircle, 
+  FolderOpen, 
+  Calendar, 
+  FileText, 
+  Users, 
+  PieChart, 
+  Database, 
+  FileCode, 
+  Box, 
+  Plug, 
+  ChevronDown, 
+  MoreHorizontal,
+  User
+} from "lucide-react";
 
 type NavItem = {
   name: string;
@@ -29,82 +29,110 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navItems: NavItem[] = [
+// Core Features - Main functionality
+const coreFeatures: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <Grid3X3 className="w-5 h-5" />,
     name: "Dashboard",
     path: "/dashboard",
   },
   {
-    icon: <ChatIcon />,
+    icon: <MessageCircle className="w-5 h-5" />,
     name: "AI Assistant",
     path: "/chat",
   },
   {
-    icon: <ListIcon />,
+    icon: <Brain className="w-5 h-5" />,
+    name: "Search & RAG",
+    path: "/test-vectorization",
+  },
+];
+
+// Data Tables - All table views
+const dataTables: NavItem[] = [
+  {
+    icon: <FolderOpen className="w-5 h-5" />,
     name: "Projects",
     path: "/tables/projects",
   },
   {
-    icon: <UserCircleIcon />,
-    name: "Clients",
-    path: "/tables/clients",
-  },
-  {
-    icon: <FileIcon />,
-    name: "Documents",
-    path: "/tables/documents",
-  },
-  {
-    icon: <CalenderIcon />,
+    icon: <Calendar className="w-5 h-5" />,
     name: "Meetings",
     subItems: [
       { name: "Meeting Intelligence", path: "/meetings", new: true },
       { name: "All Transcripts", path: "/meetings-list" },
     ],
   },
-];
-
-const othersItems: NavItem[] = [
   {
-    icon: <PageIcon />,
-    name: "Documentation",
-    path: "/docs",
+    icon: <FileText className="w-5 h-5" />,
+    name: "Documents",
+    path: "/tables/documents",
   },
   {
-    icon: <TableIcon />,
+    icon: <Users className="w-5 h-5" />,
+    name: "Clients",
+    path: "/tables/clients",
+  },
+  {
+    icon: <PieChart className="w-5 h-5" />,
+    name: "Reports",
+    subItems: [
+      { name: "Project Reports", path: "/admin", pro: true },
+      { name: "Client Analytics", path: "/admin", pro: true },
+    ],
+  },
+];
+
+// Developer Documentation
+const developerDocs: NavItem[] = [
+  {
+    icon: <Database className="w-5 h-5" />,
     name: "Database Schema",
     path: "/database-schema",
   },
   {
-    icon: <Brain className="w-5 h-5" />,
-    name: "AI Vectorization",
-    path: "/test-vectorization",
+    icon: <FileCode className="w-5 h-5" />,
+    name: "API Documentation",
+    path: "/docs",
   },
   {
-    icon: <PlugInIcon />,
-    name: "Integrations",
-    subItems: [
-      { name: "Notion Sync", path: "/admin", pro: false },
-      { name: "API Settings", path: "/admin", pro: false },
-    ],
+    icon: <Box className="w-5 h-5" />,
+    name: "Workers",
+    path: "/docs/workers",
   },
   {
-    icon: <PieChartIcon />,
-    name: "Analytics",
-    subItems: [
-      { name: "Project Reports", path: "/admin", pro: false },
-      { name: "Client Analytics", path: "/admin", pro: false },
-    ],
+    icon: <Plug className="w-5 h-5" />,
+    name: "Site Map",
+    path: "/docs/site-map",
+  },
+];
+
+// Account & Settings
+const accountItems: NavItem[] = [
+  {
+    icon: <User className="w-5 h-5" />,
+    name: "Profile",
+    path: "/admin/profile",
   },
   {
-    icon: <UserCircleIcon />,
-    name: "Account",
-    subItems: [
-      { name: "Profile", path: "/admin/profile", pro: false },
-      { name: "Settings", path: "/admin", pro: false },
-      { name: "Sign Out", path: "/signin", pro: false },
-    ],
+    icon: <Plug className="w-5 h-5" />,
+    name: "Settings",
+    path: "/admin",
+  },
+  {
+    icon: <PieChart className="w-5 h-5" />,
+    name: "Billing",
+    path: "/admin/billing",
+  },
+  {
+    icon: <FileText className="w-5 h-5" />,
+    name: "Notifications",
+    path: "/admin/notifications",
+  },
+  {
+    icon: <User className="w-5 h-5" />,
+    name: "Sign Out",
+    path: "/signin",
   },
 ];
 
@@ -114,7 +142,7 @@ const AppSidebar: React.FC = () => {
 
   const renderMenuItems = (
     navItems: NavItem[],
-    menuType: "main" | "others"
+    menuType: "coreFeatures" | "dataTables" | "developerDocs" | "accountItems"
   ) => (
     <ul className="flex flex-col gap-4">
       {navItems.map((nav, index) => (
@@ -145,7 +173,7 @@ const AppSidebar: React.FC = () => {
                 <span className={`menu-item-text`}>{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
+                <ChevronDown
                   className={`ml-auto w-5 h-5 transition-transform duration-200  ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
@@ -239,7 +267,7 @@ const AppSidebar: React.FC = () => {
   );
 
   const [openSubmenu, setOpenSubmenu] = useState<{
-    type: "main" | "others";
+    type: "coreFeatures" | "dataTables" | "developerDocs" | "accountItems";
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
@@ -253,14 +281,20 @@ const AppSidebar: React.FC = () => {
   useEffect(() => {
     // Check if the current path matches any submenu item
     let submenuMatched = false;
-    ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
+    const allMenus = [
+      { type: "coreFeatures", items: coreFeatures },
+      { type: "dataTables", items: dataTables },
+      { type: "developerDocs", items: developerDocs },
+      { type: "accountItems", items: accountItems },
+    ];
+    
+    allMenus.forEach(({ type, items }) => {
       items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
             if (isActive(subItem.path)) {
               setOpenSubmenu({
-                type: menuType as "main" | "others",
+                type: type as "coreFeatures" | "dataTables" | "developerDocs" | "accountItems",
                 index,
               });
               submenuMatched = true;
@@ -289,7 +323,7 @@ const AppSidebar: React.FC = () => {
     }
   }, [openSubmenu]);
 
-  const handleSubmenuToggle = (index: number, menuType: "main" | "others") => {
+  const handleSubmenuToggle = (index: number, menuType: "coreFeatures" | "dataTables" | "developerDocs" | "accountItems") => {
     setOpenSubmenu((prevOpenSubmenu) => {
       if (
         prevOpenSubmenu &&
@@ -352,7 +386,8 @@ const AppSidebar: React.FC = () => {
       </div>
       <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <nav className="mb-6">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
+            {/* Core Features Section */}
             <div>
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
@@ -362,15 +397,16 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Menu"
+                  "Core Features"
                 ) : (
-                  <HorizontaLDots />
+                  <MoreHorizontal className="w-4 h-4" />
                 )}
               </h2>
-              {renderMenuItems(navItems, "main")}
+              {renderMenuItems(coreFeatures, "coreFeatures")}
             </div>
 
-            <div className="">
+            {/* Data Tables Section */}
+            <div>
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
                   !isExpanded && !isHovered
@@ -379,12 +415,48 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
+                  "Data Tables"
                 ) : (
-                  <HorizontaLDots />
+                  <MoreHorizontal className="w-4 h-4" />
                 )}
               </h2>
-              {renderMenuItems(othersItems, "others")}
+              {renderMenuItems(dataTables, "dataTables")}
+            </div>
+
+            {/* Developer Docs Section */}
+            <div>
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Developer Docs"
+                ) : (
+                  <MoreHorizontal className="w-4 h-4" />
+                )}
+              </h2>
+              {renderMenuItems(developerDocs, "developerDocs")}
+            </div>
+
+            {/* Account Section */}
+            <div>
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Account"
+                ) : (
+                  <MoreHorizontal className="w-4 h-4" />
+                )}
+              </h2>
+              {renderMenuItems(accountItems, "accountItems")}
             </div>
           </div>
         </nav>

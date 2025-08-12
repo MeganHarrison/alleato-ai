@@ -42,8 +42,14 @@ next-env.d.ts
 .wrangler
 .dev.vars*
 
-# Environment variables
+# Environment variables and secrets
 .env.local
+.env
+.env.production
+secrets.json
+*.key
+*.pem
+*.cert
 
 # Node modules in subdirectories
 **/node_modules/

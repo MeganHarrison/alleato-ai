@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import API_ENDPOINTS from '@/lib/config/api';
 
 interface User {
   id: string;
@@ -36,7 +37,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch('/api/user');
+        const response = await fetch(API_ENDPOINTS.user);
         if (response.ok) {
           const data = await response.json();
           setUser(data.user);

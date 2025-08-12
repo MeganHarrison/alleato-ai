@@ -7,6 +7,7 @@ import { RefreshCw, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { D1NotionSyncButton } from "./d1-notion-sync-button";
 import { NotionToD1SyncButton } from "./notion-to-d1-sync-button";
+import API_ENDPOINTS from "@/lib/config/api";
 
 interface ProjectData {
   id: number;
@@ -36,7 +37,7 @@ export function ProjectsTableDynamic() {
     try {
       setIsRefreshing(showRefreshToast);
       
-      const response = await fetch('/api/projects');
+      const response = await fetch(API_ENDPOINTS.projects);
       const data = await response.json();
 
       if (!response.ok) {

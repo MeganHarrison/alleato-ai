@@ -8,6 +8,7 @@ import Label from "@/components/form/Label";
 import Image from "next/image";
 import { useUser } from "@/components/context/UserContext";
 import { toast } from "sonner";
+import API_ENDPOINTS from "@/lib/config/api";
 
 export default function UserMetaCard() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -70,7 +71,7 @@ export default function UserMetaCard() {
       const avatarUrl = avatarPreview || `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.email}`;
       
       // Update user via API
-      const response = await fetch('/api/user', {
+      const response = await fetch(API_ENDPOINTS.user, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
