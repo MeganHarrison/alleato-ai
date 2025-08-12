@@ -12,7 +12,11 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-export function NotionToD1SyncButton() {
+interface NotionToD1SyncButtonProps {
+  onSyncComplete?: () => void;
+}
+
+export function NotionToD1SyncButton({ onSyncComplete }: NotionToD1SyncButtonProps = {}) {
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [syncResults, setSyncResults] = useState<any>(null);
@@ -42,6 +46,9 @@ export function NotionToD1SyncButton() {
           description: `Created: ${created}, Updated: ${updated}, Errors: ${errors}`,
         });
       }
+      
+      // Call the completion callback to refresh the parent component
+      onSyncComplete?.();
     } catch (error) {
       toast.error('Failed to sync', {
         description: error instanceof Error ? error.message : 'Unknown error',

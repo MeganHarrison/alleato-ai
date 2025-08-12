@@ -171,3 +171,4 @@ function processParticipantData(participantRecords: any[]) {
     meetingsByParticipant: participantCounts,
   };
 }
+export const runtime = 'edge';

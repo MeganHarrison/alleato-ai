@@ -1,8 +1,8 @@
 "use client"
 
-import { PlusCircle, Mail, type LucideIcon } from "lucide-react"
+import { type LucideIcon } from "lucide-react"
+import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -11,9 +11,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import Link from "next/link"
 
-export function NavMain({
+export function NavDocs({
   items,
 }: {
   items: {
@@ -24,8 +23,8 @@ export function NavMain({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Core Features</SidebarGroupLabel>
-      <SidebarGroupContent className="flex flex-col gap-2">
+      <SidebarGroupLabel>Developer Docs</SidebarGroupLabel>
+      <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>

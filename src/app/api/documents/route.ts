@@ -707,3 +707,4 @@ function formatFileSize(bytes: number): string {
   
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
 }
+export const runtime = 'edge';

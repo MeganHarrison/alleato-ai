@@ -26,15 +26,21 @@ export default function MeetingsListPage() {
   const [totalObjects, setTotalObjects] = useState(0);
 
   const fetchMeetings = async () => {
+    console.log('fetchMeetings called');
     setLoading(true);
     try {
       const response = await fetch('/api/meetings');
+      console.log('API response status:', response.status);
       const data = await response.json();
+      console.log('API response data:', data);
       
       if (data.files) {
+        console.log('Setting meetings data:', data.files.length, 'items');
         setMeetings(data.files);
         setFilteredMeetings(data.files);
         setTotalObjects(data.totalObjects);
+      } else {
+        console.log('No files in response data');
       }
     } catch (error) {
       console.error('Error fetching meetings:', error);
@@ -104,16 +110,22 @@ export default function MeetingsListPage() {
 
   // Group meetings by month
   const groupedMeetings = filteredMeetings.reduce((acc, meeting) => {
-    const monthYear = new Date(meeting.date).toLocaleDateString('en-US', { 
+    console.log('Processing meeting:', meeting.title, 'with date:', meeting.date);
+    const date = new Date(meeting.date);
+    console.log('Parsed date:', date, 'isValid:', !isNaN(date.getTime()));
+    const monthYear = date.toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long' 
     });
+    console.log('Generated monthYear:', monthYear);
     if (!acc[monthYear]) {
       acc[monthYear] = [];
     }
     acc[monthYear].push(meeting);
     return acc;
   }, {} as Record<string, MeetingFile[]>);
+  
+  console.log('Final groupedMeetings keys:', Object.keys(groupedMeetings));
 
   return (
     <AppLayout>

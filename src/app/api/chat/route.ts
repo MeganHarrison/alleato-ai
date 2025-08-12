@@ -111,3 +111,4 @@ function formatSearchResults(results: any[]): string {
   
   return `\n\n**Related Documents:**\n${formatted}`;
 }
+export const runtime = 'edge';

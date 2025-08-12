@@ -72,3 +72,4 @@ Test: This is a test file to verify R2 uploads are working.
     );
   }
 }
+export const runtime = 'edge';
